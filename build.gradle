@@ -1,0 +1,40 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media', 'javafx.base', 'javafx.graphics', 'javafx.swing' ]
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'org.fxmisc.richtext:richtextfx:0.10.6'
+    implementation 'org.apache.xmlgraphics:batik-all:1.15'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'com.jfoenix:jfoenix:9.0.10'
+}
+
+
+def mainClassName = "com.vodafone.FakeMain"
+
+jar {
+
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+
+}
